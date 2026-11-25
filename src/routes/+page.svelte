@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HeroSection from '$lib/components/HeroSection.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
-	import { Search, SlidersHorizontal, X, LayoutGrid, List, ArrowUpDown, Filter, Sparkles } from 'lucide-svelte';
+	import { Search, X, LayoutGrid, List, ArrowUpDown } from 'lucide-svelte';
 
 	let { data } = $props();
 
@@ -12,7 +12,7 @@
 	let viewMode = $state<'grid' | 'list'>('grid');
 
 	const statusOptions = [
-		{ value: 'All', label: 'All Projects' },
+		{ value: 'All', label: 'All' },
 		{ value: 'Produccion', label: 'Production' },
 		{ value: 'En Pruebas', label: 'Testing' },
 		{ value: 'Desarrollo', label: 'Development' },
@@ -20,17 +20,6 @@
 	];
 
 	const availableTags = $derived(['All', ...data.allTags]);
-
-	// Calculate counts for each status
-	const statusCounts = $derived.by(() => {
-		const counts: Record<string, number> = { All: data.projects.length };
-		for (const opt of statusOptions) {
-			if (opt.value !== 'All') {
-				counts[opt.value] = data.projects.filter((p) => p.status === opt.value).length;
-			}
-		}
-		return counts;
-	});
 
 	// Filtered and sorted projects
 	const processedProjects = $derived.by(() => {
@@ -97,47 +86,38 @@
 	categoriesCount={data.stats.categoriesCount}
 />
 
-<main id="catalog" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-	<!-- Control Bar & Search -->
-	<section class="space-y-5">
-		<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<main id="catalog" class="max-w-5xl mx-auto px-6 py-12">
+	<!-- Minimalist Control Bar -->
+	<section class="space-y-4">
+		<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 			<!-- Search Bar -->
-			<div class="relative flex-1 max-w-xl">
-				<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-					<Search class="h-4 w-4" />
-				</div>
+			<div class="relative flex-1 max-w-md">
+				<Search class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500 pointer-events-none" />
 				<input
 					id="project-search-input"
 					type="text"
 					bind:value={searchQuery}
-					placeholder="Search by project name, description or tech stack... (Press / to focus)"
-					class="w-full pl-10 pr-16 py-2.5 rounded-xl border border-slate-800 bg-slate-900/70 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:border-slate-700 transition-all shadow-inner"
+					placeholder="Search systems, tags or keywords... ( / )"
+					class="w-full pl-8 pr-8 py-2 rounded-md border border-zinc-800 bg-zinc-950 text-xs font-mono text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-700 transition-colors"
 				/>
-				<div class="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1.5">
-					{#if searchQuery}
-						<button
-							onclick={() => (searchQuery = '')}
-							class="p-1 rounded text-slate-400 hover:text-white"
-							aria-label="Clear search"
-						>
-							<X class="h-4 w-4" />
-						</button>
-					{:else}
-						<span class="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono border border-slate-800 text-slate-500 bg-slate-950/60">
-							/
-						</span>
-					{/if}
-				</div>
+				{#if searchQuery}
+					<button
+						onclick={() => (searchQuery = '')}
+						class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-200"
+						aria-label="Clear search"
+					>
+						<X class="h-3.5 w-3.5" />
+					</button>
+				{/if}
 			</div>
 
-			<!-- View & Sort Controls -->
-			<div class="flex items-center gap-2.5 self-start lg:self-auto">
-				<!-- Sort Selector -->
+			<!-- Sort & View Mode Controls -->
+			<div class="flex items-center gap-2 self-start sm:self-auto">
 				<div class="relative flex items-center">
-					<ArrowUpDown class="absolute left-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+					<ArrowUpDown class="absolute left-2.5 h-3 w-3 text-zinc-500 pointer-events-none" />
 					<select
 						bind:value={sortBy}
-						class="pl-8 pr-7 py-2 rounded-lg border border-slate-800 bg-slate-900/70 text-xs font-mono text-slate-300 focus:outline-none focus:ring-1 focus:ring-slate-400 appearance-none cursor-pointer"
+						class="pl-7 pr-6 py-1.5 rounded-md border border-zinc-800 bg-zinc-950 text-xs font-mono text-zinc-400 focus:outline-none focus:border-zinc-700 appearance-none cursor-pointer"
 					>
 						<option value="newest">Sort: Newest</option>
 						<option value="name">Sort: Name (A-Z)</option>
@@ -145,11 +125,10 @@
 					</select>
 				</div>
 
-				<!-- Grid / List Toggle -->
-				<div class="flex items-center bg-slate-900/80 p-0.5 rounded-lg border border-slate-800 text-slate-400">
+				<div class="flex items-center border border-zinc-800 rounded-md p-0.5 bg-zinc-950 text-zinc-500">
 					<button
 						onclick={() => (viewMode = 'grid')}
-						class="p-1.5 rounded-md transition-colors {viewMode === 'grid' ? 'bg-slate-800 text-white shadow-xs' : 'hover:text-slate-200'}"
+						class="p-1 rounded transition-colors {viewMode === 'grid' ? 'bg-zinc-800 text-white' : 'hover:text-zinc-300'}"
 						title="Grid View"
 						aria-label="Grid View"
 					>
@@ -157,7 +136,7 @@
 					</button>
 					<button
 						onclick={() => (viewMode = 'list')}
-						class="p-1.5 rounded-md transition-colors {viewMode === 'list' ? 'bg-slate-800 text-white shadow-xs' : 'hover:text-slate-200'}"
+						class="p-1 rounded transition-colors {viewMode === 'list' ? 'bg-zinc-800 text-white' : 'hover:text-zinc-300'}"
 						title="List View"
 						aria-label="List View"
 					>
@@ -167,35 +146,28 @@
 			</div>
 		</div>
 
-		<!-- Status Filter Tabs -->
-		<div class="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
-			<span class="text-slate-500 font-mono text-[11px] uppercase tracking-wider mr-1 hidden sm:inline">
-				Status:
-			</span>
+		<!-- Status Filter Tabs (Linear-style clean tabs) -->
+		<div class="flex items-center gap-1 overflow-x-auto pb-1 text-xs font-mono border-b border-zinc-900 pt-2">
 			{#each statusOptions as opt}
-				{@const count = statusCounts[opt.value] || 0}
 				<button
 					onclick={() => (activeStatus = opt.value)}
-					class="px-2.5 py-1 rounded-lg font-mono text-xs transition-colors flex items-center gap-1.5 {activeStatus === opt.value ? 'bg-slate-100 text-slate-950 font-semibold' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-850 bg-slate-900/50 border border-slate-800/80'}"
+					class="px-2.5 py-1 rounded transition-colors {activeStatus === opt.value ? 'bg-zinc-900 text-white font-medium' : 'text-zinc-500 hover:text-zinc-300'}"
 				>
-					<span>{opt.label}</span>
-					<span class="text-[10px] opacity-75">({count})</span>
+					{opt.label}
 				</button>
 			{/each}
 		</div>
 
-		<!-- Tags Filter Chips -->
+		<!-- Domain / Tech Tag Selector -->
 		{#if availableTags.length > 1}
-			<div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-				<span class="text-slate-500 font-mono text-[11px] uppercase tracking-wider mr-1 shrink-0 hidden sm:inline">
-					Domain:
-				</span>
+			<div class="flex items-center gap-2 overflow-x-auto pt-1 pb-1 text-xs font-mono scrollbar-none">
+				<span class="text-zinc-600 shrink-0 text-[11px]">Domain:</span>
 				{#each availableTags as tag}
 					<button
 						onclick={() => (activeTag = tag)}
-						class="shrink-0 px-2.5 py-0.5 rounded-md text-[11px] font-mono border transition-all {activeTag === tag ? 'border-sky-500/50 bg-sky-500/10 text-sky-300' : 'border-slate-800/80 bg-slate-900/40 text-slate-400 hover:border-slate-700 hover:text-slate-200'}"
+						class="shrink-0 text-[11px] px-2 py-0.5 rounded transition-colors {activeTag === tag ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}"
 					>
-						{tag === 'All' ? 'All Tags' : `#${tag}`}
+						{tag === 'All' ? 'All' : `#${tag}`}
 					</button>
 				{/each}
 			</div>
@@ -204,52 +176,46 @@
 
 	<!-- Projects Section -->
 	<section class="mt-8">
-		<!-- Section Header with active filters count -->
-		<div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800/60 text-xs">
-			<div class="flex items-center gap-2">
-				<span class="font-mono text-slate-400">
-					Showing <span class="text-white font-semibold">{processedProjects.length}</span> of {data.projects.length} projects
-				</span>
-			</div>
+		<!-- Section Status line -->
+		<div class="flex items-center justify-between pb-4 mb-4 text-xs font-mono text-zinc-500 border-b border-zinc-900">
+			<span>
+				Showing {processedProjects.length} of {data.projects.length} projects
+			</span>
 
 			{#if searchQuery || activeTag !== 'All' || activeStatus !== 'All' || sortBy !== 'newest'}
 				<button
 					onclick={resetFilters}
-					class="text-xs text-sky-400 hover:text-sky-300 flex items-center gap-1 font-mono transition-colors"
+					class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
 				>
-					<X class="h-3.5 w-3.5" />
-					<span>Clear Filters</span>
+					<X class="h-3 w-3" />
+					<span>Reset Filters</span>
 				</button>
 			{/if}
 		</div>
 
 		{#if processedProjects.length > 0}
 			{#if viewMode === 'grid'}
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{#each processedProjects as project (project.id)}
 						<ProjectCard {project} onSelectTag={handleTagSelect} viewMode="grid" />
 					{/each}
 				</div>
 			{:else}
-				<div class="space-y-3">
+				<div class="space-y-2">
 					{#each processedProjects as project (project.id)}
 						<ProjectCard {project} onSelectTag={handleTagSelect} viewMode="list" />
 					{/each}
 				</div>
 			{/if}
 		{:else}
-			<!-- Empty State -->
-			<div class="rounded-xl border border-dashed border-slate-800 p-12 text-center bg-slate-900/20">
-				<Filter class="mx-auto h-8 w-8 text-slate-600 mb-3" />
-				<h3 class="text-base font-medium text-slate-300">No matching projects found</h3>
-				<p class="mt-1 text-xs text-slate-500 max-w-sm mx-auto">
-					No projects match your current filter combination. Try clearing your search query or selecting a different status or domain.
-				</p>
+			<!-- Minimalist Empty State -->
+			<div class="p-12 text-center rounded-lg border border-zinc-900 bg-zinc-950/40">
+				<p class="text-sm text-zinc-400">No projects match the active criteria.</p>
 				<button
 					onclick={resetFilters}
-					class="mt-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-100 text-xs font-semibold text-slate-950 hover:bg-white transition-all shadow-xs"
+					class="mt-4 text-xs font-mono text-zinc-300 hover:text-white underline underline-offset-4 cursor-pointer"
 				>
-					Reset all filters
+					Clear filters and search
 				</button>
 			</div>
 		{/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { Github, ArrowUp, Code2, Database } from 'lucide-svelte';
+	import { ArrowUpRight, ArrowUp } from 'lucide-svelte';
 
 	let { children } = $props();
 
@@ -9,22 +9,18 @@
 	}
 </script>
 
-<div class="min-h-screen flex flex-col justify-between bg-[#090d16] text-slate-100 selection:bg-sky-500/20 selection:text-sky-300">
-	<!-- Top Sticky Micro-Navigation -->
-	<nav class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#090d16]/80 backdrop-blur-md">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-			<a href="/" class="flex items-center gap-2.5 text-sm font-bold text-white tracking-tight hover:text-sky-300 transition-colors">
-				<div class="h-7 w-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-white font-mono text-xs font-semibold">
-					IR
-				</div>
-				<span class="font-bold">IngRoy</span>
-				<span class="hidden sm:inline-block text-xs font-normal text-slate-400">/ Systems & Portfolio</span>
+<div class="min-h-screen flex flex-col justify-between bg-black text-zinc-100 selection:bg-zinc-800 selection:text-white">
+	<!-- Minimalist Top Navigation -->
+	<nav class="sticky top-0 z-40 w-full border-b border-zinc-900 bg-black/80 backdrop-blur-md">
+		<div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+			<a href="/" class="text-sm font-medium text-white tracking-tight hover:text-zinc-300 transition-colors">
+				LastGentlman
 			</a>
 
-			<div class="flex items-center gap-4 text-xs font-mono">
+			<div class="flex items-center gap-5 text-xs font-mono">
 				<a
 					href="#catalog"
-					class="text-slate-400 hover:text-white transition-colors"
+					class="text-zinc-400 hover:text-white transition-colors"
 				>
 					Projects
 				</a>
@@ -32,10 +28,10 @@
 					href="https://github.com/LastGentlman"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="hidden sm:inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
+					class="text-zinc-400 hover:text-white transition-colors flex items-center gap-0.5"
 				>
-					<Github class="h-3.5 w-3.5" />
 					<span>GitHub</span>
+					<ArrowUpRight class="h-3 w-3" />
 				</a>
 			</div>
 		</div>
@@ -45,39 +41,20 @@
 		{@render children()}
 	</div>
 
-	<!-- Polished Engineering Footer -->
-	<footer class="mt-24 border-t border-slate-800/80 bg-slate-950/60 py-10 text-xs text-slate-500">
-		<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-				<div class="space-y-1 text-center sm:text-left">
-					<p class="font-mono text-slate-300 font-medium">
-						Engineering Portfolio & Systems Showcase
-					</p>
-					<p class="text-slate-500">
-						Powered by SvelteKit 5 (Runes), Tailwind CSS 4, and Supabase.
-					</p>
-				</div>
+	<!-- Minimalist Footer -->
+	<footer class="mt-24 border-t border-zinc-900 py-10 text-xs font-mono text-zinc-500">
+		<div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+			<p>
+				© {new Date().getFullYear()} LastGentlman · Built with SvelteKit & Supabase
+			</p>
 
-				<div class="flex items-center gap-4">
-					<a
-						href="https://github.com/LastGentlman"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-slate-400 hover:text-white transition-colors flex items-center gap-1 font-mono"
-					>
-						<Github class="h-3.5 w-3.5" />
-						<span>LastGentlman</span>
-					</a>
-					<span class="text-slate-700">•</span>
-					<button
-						onclick={scrollToTop}
-						class="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors font-mono cursor-pointer"
-					>
-						<span>Top</span>
-						<ArrowUp class="h-3.5 w-3.5" />
-					</button>
-				</div>
-			</div>
+			<button
+				onclick={scrollToTop}
+				class="text-zinc-500 hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+			>
+				<span>Back to top</span>
+				<ArrowUp class="h-3 w-3" />
+			</button>
 		</div>
 	</footer>
 </div>
