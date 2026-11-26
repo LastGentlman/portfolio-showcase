@@ -92,18 +92,18 @@
 		<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 			<!-- Search Bar -->
 			<div class="relative flex-1 max-w-md">
-				<Search class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500 pointer-events-none" />
+				<Search class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
 				<input
 					id="project-search-input"
 					type="text"
 					bind:value={searchQuery}
 					placeholder="Search systems, tags or keywords... ( / )"
-					class="w-full pl-8 pr-8 py-2 rounded-md border border-zinc-800 bg-zinc-950 text-xs font-mono text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-700 transition-colors"
+					class="w-full pl-8 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs font-mono text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-700 transition-colors"
 				/>
 				{#if searchQuery}
 					<button
 						onclick={() => (searchQuery = '')}
-						class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-200"
+						class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-200 cursor-pointer"
 						aria-label="Clear search"
 					>
 						<X class="h-3.5 w-3.5" />
@@ -114,10 +114,10 @@
 			<!-- Sort & View Mode Controls -->
 			<div class="flex items-center gap-2 self-start sm:self-auto">
 				<div class="relative flex items-center">
-					<ArrowUpDown class="absolute left-2.5 h-3 w-3 text-zinc-500 pointer-events-none" />
+					<ArrowUpDown class="absolute left-2.5 h-3 w-3 text-zinc-400 dark:text-zinc-500 pointer-events-none" />
 					<select
 						bind:value={sortBy}
-						class="pl-7 pr-6 py-1.5 rounded-md border border-zinc-800 bg-zinc-950 text-xs font-mono text-zinc-400 focus:outline-none focus:border-zinc-700 appearance-none cursor-pointer"
+						class="pl-7 pr-6 py-1.5 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-xs font-mono text-zinc-700 dark:text-zinc-400 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-700 appearance-none cursor-pointer"
 					>
 						<option value="newest">Sort: Newest</option>
 						<option value="name">Sort: Name (A-Z)</option>
@@ -125,10 +125,10 @@
 					</select>
 				</div>
 
-				<div class="flex items-center border border-zinc-800 rounded-md p-0.5 bg-zinc-950 text-zinc-500">
+				<div class="flex items-center border border-zinc-200 dark:border-zinc-800 rounded-md p-0.5 bg-white dark:bg-zinc-950 text-zinc-400 dark:text-zinc-500">
 					<button
 						onclick={() => (viewMode = 'grid')}
-						class="p-1 rounded transition-colors {viewMode === 'grid' ? 'bg-zinc-800 text-white' : 'hover:text-zinc-300'}"
+						class="p-1 rounded transition-colors cursor-pointer {viewMode === 'grid' ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white' : 'hover:text-zinc-700 dark:hover:text-zinc-300'}"
 						title="Grid View"
 						aria-label="Grid View"
 					>
@@ -136,7 +136,7 @@
 					</button>
 					<button
 						onclick={() => (viewMode = 'list')}
-						class="p-1 rounded transition-colors {viewMode === 'list' ? 'bg-zinc-800 text-white' : 'hover:text-zinc-300'}"
+						class="p-1 rounded transition-colors cursor-pointer {viewMode === 'list' ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white' : 'hover:text-zinc-700 dark:hover:text-zinc-300'}"
 						title="List View"
 						aria-label="List View"
 					>
@@ -147,11 +147,11 @@
 		</div>
 
 		<!-- Status Filter Tabs (Linear-style clean tabs) -->
-		<div class="flex items-center gap-1 overflow-x-auto pb-1 text-xs font-mono border-b border-zinc-900 pt-2">
+		<div class="flex items-center gap-1 overflow-x-auto pb-1 text-xs font-mono border-b border-zinc-200 dark:border-zinc-900 pt-2">
 			{#each statusOptions as opt}
 				<button
 					onclick={() => (activeStatus = opt.value)}
-					class="px-2.5 py-1 rounded transition-colors {activeStatus === opt.value ? 'bg-zinc-900 text-white font-medium' : 'text-zinc-500 hover:text-zinc-300'}"
+					class="px-2.5 py-1 rounded transition-colors cursor-pointer {activeStatus === opt.value ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white font-medium' : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-300'}"
 				>
 					{opt.label}
 				</button>
@@ -161,11 +161,11 @@
 		<!-- Domain / Tech Tag Selector -->
 		{#if availableTags.length > 1}
 			<div class="flex items-center gap-2 overflow-x-auto pt-1 pb-1 text-xs font-mono scrollbar-none">
-				<span class="text-zinc-600 shrink-0 text-[11px]">Domain:</span>
+				<span class="text-zinc-400 dark:text-zinc-600 shrink-0 text-[11px]">Domain:</span>
 				{#each availableTags as tag}
 					<button
 						onclick={() => (activeTag = tag)}
-						class="shrink-0 text-[11px] px-2 py-0.5 rounded transition-colors {activeTag === tag ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}"
+						class="shrink-0 text-[11px] px-2 py-0.5 rounded transition-colors cursor-pointer {activeTag === tag ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white' : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-300'}"
 					>
 						{tag === 'All' ? 'All' : `#${tag}`}
 					</button>
@@ -177,7 +177,7 @@
 	<!-- Projects Section -->
 	<section class="mt-8">
 		<!-- Section Status line -->
-		<div class="flex items-center justify-between pb-4 mb-4 text-xs font-mono text-zinc-500 border-b border-zinc-900">
+		<div class="flex items-center justify-between pb-4 mb-4 text-xs font-mono text-zinc-500 border-b border-zinc-200 dark:border-zinc-900">
 			<span>
 				Showing {processedProjects.length} of {data.projects.length} projects
 			</span>
@@ -185,7 +185,7 @@
 			{#if searchQuery || activeTag !== 'All' || activeStatus !== 'All' || sortBy !== 'newest'}
 				<button
 					onclick={resetFilters}
-					class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+					class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
 				>
 					<X class="h-3 w-3" />
 					<span>Reset Filters</span>
@@ -209,11 +209,11 @@
 			{/if}
 		{:else}
 			<!-- Minimalist Empty State -->
-			<div class="p-12 text-center rounded-lg border border-zinc-900 bg-zinc-950/40">
-				<p class="text-sm text-zinc-400">No projects match the active criteria.</p>
+			<div class="p-12 text-center rounded-lg border border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950/40">
+				<p class="text-sm text-zinc-600 dark:text-zinc-400">No projects match the active criteria.</p>
 				<button
 					onclick={resetFilters}
-					class="mt-4 text-xs font-mono text-zinc-300 hover:text-white underline underline-offset-4 cursor-pointer"
+					class="mt-4 text-xs font-mono text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white underline underline-offset-4 cursor-pointer"
 				>
 					Clear filters and search
 				</button>

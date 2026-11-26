@@ -14,22 +14,22 @@
 	}: Props = $props();
 </script>
 
-<header class="pt-16 pb-12 sm:pt-24 sm:pb-16 border-b border-zinc-900 bg-black">
+<header class="pt-16 pb-12 sm:pt-24 sm:pb-16 border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-black transition-colors duration-150">
 	<div class="max-w-5xl mx-auto px-6">
 		<div class="space-y-6">
 			<!-- Quiet developer context -->
 			<div class="flex items-center gap-3 text-xs font-mono text-zinc-500">
-				<span class="text-zinc-400">LastGentlman</span>
-				<span class="text-zinc-700">/</span>
+				<span class="text-zinc-700 dark:text-zinc-400">LastGentlman</span>
+				<span class="text-zinc-300 dark:text-zinc-700">/</span>
 				<span>Engineering Portfolio</span>
 			</div>
 
 			<!-- Core Title -->
 			<div class="space-y-3 max-w-3xl">
-				<h1 class="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.15]">
+				<h1 class="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-zinc-900 dark:text-white leading-[1.15]">
 					Software Systems & Selected Work
 				</h1>
-				<p class="text-base text-zinc-400 leading-relaxed font-normal">
+				<p class="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
 					A curated collection of production platforms, distributed backend services, and developer tools. Focused on performance, architecture, and reliable engineering.
 				</p>
 			</div>
@@ -37,17 +37,17 @@
 			<!-- Understated Inline Metrics -->
 			<div class="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-zinc-500">
 				<div class="flex items-center gap-2">
-					<span class="text-zinc-200 font-medium tabular-nums">{totalProjects}</span>
+					<span class="text-zinc-900 dark:text-zinc-200 font-medium tabular-nums">{totalProjects}</span>
 					<span>Projects</span>
 				</div>
-				<span class="text-zinc-800 hidden sm:inline">·</span>
+				<span class="text-zinc-300 dark:text-zinc-800 hidden sm:inline">·</span>
 				<div class="flex items-center gap-2">
-					<span class="text-zinc-200 font-medium tabular-nums">{productionCount}</span>
+					<span class="text-zinc-900 dark:text-zinc-200 font-medium tabular-nums">{productionCount}</span>
 					<span>Production Ready</span>
 				</div>
-				<span class="text-zinc-800 hidden sm:inline">·</span>
+				<span class="text-zinc-300 dark:text-zinc-800 hidden sm:inline">·</span>
 				<div class="flex items-center gap-2">
-					<span class="text-zinc-200 font-medium tabular-nums">{categoriesCount}</span>
+					<span class="text-zinc-900 dark:text-zinc-200 font-medium tabular-nums">{categoriesCount}</span>
 					<span>Tech Domains</span>
 				</div>
 			</div>
